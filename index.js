@@ -12,6 +12,23 @@ start();
 //A function to generate a random integer within a specified range:
 function randomInt(max, min) {
   return Math.floor(min + (Math.random() * (max - min + 1)))
+};
+
+//A function to generate an array of each number between the start and end values:
+//Start function
+function rangeArray(min, max) {
+  if (min > max) {        // Check that start value is less than end. Prompt user to enter values again if not.
+    console.log('Your chosen range is invalid. Please select a start value which is less than the end value.');
+  } else {
+    let count = min;        // Begin counting with min param.
+    let intArray = new Array(); // Define an empty array with Array constructor
+    while (count <= max) {  //Keep counting up to and including max param.
+      intArray.push(count);   //Use push() method to append each successive integer to intArray.
+      count++;
+    };
+    return intArray;
+  };
+
 }
 
 async function start() {
@@ -21,22 +38,6 @@ async function start() {
 
 
 
-  //A function to generate an array of each number between the start and end values:
-  //Start function
-  function rangeArray(min, max) {
-    if (min > max) {        // Check that start value is less than end. Prompt user to enter values again if not.
-      console.log('Your chosen range is invalid. Please select a start value which is less than the end value.');
-    } else {
-      let count = min;        // Begin counting with min param.
-      let intArray = new Array(); // Define an empty array with Array constructor
-      while (count <= max) {  //Keep counting up to and including max param.
-        intArray.push(count);   //Use push() method to append each successive integer to intArray.
-        count++;
-      };
-      return intArray;
-    };
-
-  }
 
 
   // A function to implement binary search within a specified range

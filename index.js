@@ -10,9 +10,9 @@ function ask(questionText) {
 start();
 
 async function start() {
-  console.log("Let's play a game where you (human) make up a number and I (computer) try to guess it.")
-  let secretNumber = await ask("What is your secret number?\nI won't peek, I promise...\n");
-  console.log('You entered: ' + secretNumber);
+  console.log("Please think of a number between 1 and 100 (inclusive).\nI will try to guess it.")
+  let randNumResp  = await ask("Have you selected a random number between 1 and 100? (Y/N)\n");
+  console.log('You entered: ' + randNumResp);
   // Now try and complete the program.
   process.exit();
 }

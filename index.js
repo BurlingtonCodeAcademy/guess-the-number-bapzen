@@ -14,7 +14,7 @@ start();
 async function start() {
 
   let min = 1;
-  let max = 100;
+  let max = 101;
 
   console.log("Hello. I am Lt. Commander Data.\nPlease think of a number between 1 and 100 (inclusive).\nI will try to guess it.")
 
@@ -23,42 +23,43 @@ async function start() {
   console.log('You entered: ' + randNumResp);
 
   let highLow;
-  let bestGuess = Math.floor((max - min) / 2);
-  let userChoice = (await ask("Is it... " + bestGuess + "? (Y/N)\n")).toUpperCase();
+  let middle;
+  // let nextGuess;
+  let nextGuess = Math.floor((max + min) / 2);
+  let userChoice = (await ask("Is it... " + nextGuess + "? (Y/N)\n")).toUpperCase();
 
+  ////////////////////////////////////////////
 
- 
-
-  function guessNum(min, max, option) {
-    let pivot;
-    option = highLow;
+  function guessNum(pivot, option) {
+    
     if (option === 'H') {
-      pivot = bestGuess + 1;
-      bestGuess = Math.floor((max - pivot) / 2);
+      middle = Math.floor((max + pivot) / 2);
     } else if (option === 'L') {
-      pivot = bestGuess - 1;
-      bestGuess = Math.floor((pivot - min) / 2);
+      middle = Math.floor((pivot + min) / 2);
     };
-    return bestGuess;
+    // console.log('Middle is ' + middle + '.');
+    return middle;
   }
 
+  ////////////////////////////////////////////////
 
   while (userChoice !== 'Y') {
 
-    // bestGuess = guessNum(min, max, highLow);
-
-
     if (userChoice === 'N') {
+ 
+      highLow = (await ask('Hmmm...is it higher(H) or lower(L)?')).toUpperCase();
 
-      let highLow = (await ask('Hmmm...is it higher(H) or lower(L)?')).toUpperCase();
+      if (highLow === 'H') {
+        min = nextGuess;
+      } else if (highLow === 'L') {
+        max = nextGuess;
+      };
 
-      // Sanitize the input; capitalize character to pass to if...else stmt
-      bestGuess = guessNum(min, max, highLow);
+      nextGuess = guessNum(nextGuess, highLow);
 
-      
     };
 
-    userChoice = (await ask("Is it... " + bestGuess + "? (Y/N)\n")).toUpperCase();
+    userChoice = (await ask("Is it... " + nextGuess + "? (Y/N)\n")).toUpperCase();
   }
 
   if (userChoice === 'Y') {

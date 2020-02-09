@@ -27,7 +27,7 @@ async function start() {
   let highLow;
   let middle;
   let nextGuess = Math.floor((max + min) / 2);
-  
+  let tryCount = 1;
 // Ask user if guess is correct; first run will be for range set in app-level variables:
   let userChoice = (await ask("Is it... " + nextGuess + "? (Y/N)\n")).toUpperCase();
 
@@ -68,14 +68,14 @@ async function start() {
       nextGuess = guessNum(nextGuess, highLow);   // set the function result to be the next guess
 
     };
-
+    tryCount++;
 // Gather user input again to either loop again to refine guess, or claim victory:
     userChoice = (await ask("Is it... " + nextGuess + "? (Y/N)\n")).toUpperCase();
   }
 
-// user admits guess was correct; exit game with victory message
+// user admits guess was correct; exit game with victory message and number of tries it took
   if (userChoice === 'Y') {
-    console.log("Lt. Commander Data wins again!!")
+    console.log("Lt. Commander Data wins again!!\nIt only took me " + tryCount + " tries!");
     process.exit();
   };
 

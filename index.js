@@ -23,6 +23,11 @@ async function start() {
 
   console.log('You entered: ' + randNumResp);
 
+  if (randNumResp === 'N') {
+    console.log("I'll assume you've chosen by now.");
+
+  };
+
   //Declare and initialize app-level variables:
   let highLow;
   let middle;
@@ -51,17 +56,15 @@ async function start() {
   }
 
   ////////////////////////////////////////////////
-  
-  
+
+
   // Start while loop to generate successive guesses:
   while (userChoice !== 'Y') {
-    
+
 
     if (userChoice === 'N') {
 
       highLow = (await ask('Hmmm...is it higher(H) or lower(L)?')).toUpperCase();
-
-      
 
       if (highLow === 'H') {  // evaluate the user's highLow input for meaning 'go higher' or 'go lower'
         min = nextGuess;      // set the value of min to that of the prior guess
@@ -71,27 +74,23 @@ async function start() {
 
       // Call the guessNum() function with the prior guess in the pivot param, highLow input in the option param:
       nextGuess = guessNum(nextGuess, highLow);   // set the function result to be the next guess
-
+      
+// Evaluate whether user has forgotten or changed the original number:
       if (nextGuess === lastGuess && userChoice === 'N') {
-        console.log("But you said your number was above " + lastGuess + "!\nHow can it be below " + nextGuess + "?");
+        console.log("But you said your number was above " + lastGuess + "!\nHow can it now be below " + nextGuess + "?\nData out.");
         process.exit();
-        // }; else if (highLow === 'L') {
-        //   console.log("But you said your number was below " + lastGuess + "!\nHow can it be above " + nextGuess + "?");
-        // }
-    
+
       };
 
     };
 
     tryCount++;   //increment the count of tries
-    lastGuess = nextGuess;
+    lastGuess = nextGuess;  // set lastGuess equal to this nextGuess; lastGuess is stored outside of the loop to compare later for cheat detection.
+
     // Gather user input again to either loop again to refine guess, or claim victory:
     userChoice = (await ask("Is it... " + nextGuess + "? (Y/N)\n")).toUpperCase();
 
   }
-
-    
-
 
   // user admits guess was correct; exit game with victory message and number of tries it took
   if (userChoice === 'Y') {
